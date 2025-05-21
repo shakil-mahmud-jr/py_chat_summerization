@@ -70,3 +70,18 @@ def extract_keywords(messages, num_keywords=5, stop_words=None):
     word_counts = Counter(word for word in words if word not in stop_words)
 
     return [word for word, count in word_counts.most_common(num_keywords)]
+
+
+
+
+def generate_summary(statistics, keywords):
+    """
+    Generates a summary string based on statistics and keywords.
+    """
+    summary = "Summary:\n"
+    summary += f"- The conversation had {statistics['total']} exchanges.\n"
+    summary += f"- User sent {statistics['User']} messages and AI sent {statistics['AI']} messages.\n"
+    summary += f"- Most common keywords: {', '.join(keywords)}\n"
+    summary += "- Nature of the conversation: " + ", ".join(keywords) + ".\n"
+
+    return summary
