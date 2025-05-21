@@ -34,3 +34,39 @@ def analyze_message_statistics(messages):
         'User': user_messages,
         'AI': ai_messages
     }
+
+
+def extract_keywords(messages, num_keywords=5, stop_words=None):
+    """
+    Extracts the top most frequent words from messages, excluding stop words.
+    """
+    if stop_words is None:
+        stop_words = set([
+            'the', 'a', 'an', 'is', 'it', 'in', 'of', 'and', 'to', 'for', 'with',
+            'on', 'by', 'as', 'at', 'this', 'that', 'be', 'have', 'i', 'you',
+            'he', 'she', 'it', 'we', 'they', 'what', 'where', 'when', 'why',
+            'how', 'can', 'will', 'would', 'should', 'could', 'do', 'does',
+            'did', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
+            'have', 'has', 'had', 'do', 'does', 'did', 'say', 'says', 'said',
+            'go', 'goes', 'went', 'get', 'gets', 'got', 'make', 'makes',
+            'made', 'know', 'knows', 'knew', 'think', 'thinks', 'thought',
+            'take', 'takes', 'took', 'see', 'sees', 'saw', 'come', 'comes',
+            'came', 'want', 'wants', 'wanted', 'look', 'looks', 'looked',
+            'use', 'uses', 'used', 'find', 'finds', 'found', 'give', 'gives',
+            'gave', 'tell', 'tells', 'told', 'ask', 'asks', 'asked', 'work',
+            'works', 'worked', 'seem', 'seems', 'seemed', 'feel', 'feels',
+            'felt', 'leave', 'leaves', 'left', 'call', 'calls', 'called',
+            'about', 'above', 'after', 'again', 'against', 'all', 'any',
+            'around', 'because', 'before', 'below', 'between', 'both', 'but',
+            'by', 'down', 'from', 'here', 'into', 'more', 'most', 'other',
+            'out', 'over', 'same', 'some', 'such', 'than', 'then', 'there',
+            'these', 'they', 'this', 'those', 'through', 'until', 'up',
+            'very', 'what', 'when', 'where', 'which', 'while', 'who', 'whom',
+            'why', 'with', 'you', 'your'
+        ])
+
+    all_text = ' '.join(msg['message'] for msg in messages)
+    words = re.findall(r'\b\w+\b', all_text.lower())
+    word_counts = Counter(word for word in words if word not in stop_words)
+
+    return [word for word, count in word_counts.most_common(num_keywords)]
