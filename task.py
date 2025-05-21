@@ -85,3 +85,18 @@ def generate_summary(statistics, keywords):
     summary += "- Nature of the conversation: " + ", ".join(keywords) + ".\n"
 
     return summary
+
+
+
+if __name__ == "__main__":
+    chat_file = "chat.txt"
+    messages = parse_chat_log(chat_file)
+
+    if messages:
+        stats = analyze_message_statistics(messages)
+        keywords = extract_keywords(messages)
+        summary = generate_summary(stats, keywords)
+
+        print(summary)
+    else:
+        print("Could not process chat log.")
