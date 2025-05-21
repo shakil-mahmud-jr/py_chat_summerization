@@ -21,3 +21,16 @@ def parse_chat_log(file_path):
         return None
     return messages
 
+def analyze_message_statistics(messages):
+    """
+    Calculates total messages and messages per speaker.
+    """
+    total_messages = len(messages)
+    user_messages = sum(1 for msg in messages if msg['speaker'] == 'User')
+    ai_messages = total_messages - user_messages
+
+    return {
+        'total': total_messages,
+        'User': user_messages,
+        'AI': ai_messages
+    }
